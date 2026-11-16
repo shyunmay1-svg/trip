@@ -3,80 +3,112 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>AI 맞춤 여행 플래너</title>
+    <title>Retro TravelMate 98</title>
     <!-- Tailwind CSS CDN -->
     <script src="https://cdn.tailwindcss.com"></script>
     <!-- FontAwesome for Icons -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <!-- Google Fonts (Inter) -->
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Dosis:wght@500;700&family=VT323&display=swap" rel="stylesheet">
     <style>
         body {
-            font-family: 'Inter', sans-serif;
-            background-color: #f8fafc;
+            background-color: #008080; /* Classic Win95 Teal Desktop */
+            font-family: 'Dosis', sans-serif;
+            image-rendering: pixelated;
         }
-        .gradient-bg {
-            background: linear-gradient(135deg, #4f46e5 0%, #3b82f6 100%);
+        /* Retro 95 Bevel Styles */
+        .win-window {
+            background-color: #c0c0c0;
+            border-top: 2px solid #ffffff;
+            border-left: 2px solid #ffffff;
+            border-right: 2px solid #404040;
+            border-bottom: 2px solid #404040;
+            box-shadow: 4px 4px 10px rgba(0, 0, 0, 0.4);
         }
-        .card-shadow {
-            box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.05), 0 8px 10px -6px rgba(0, 0, 0, 0.05);
+        .win-titlebar {
+            background: linear-gradient(90deg, #000080, #1084d0);
         }
-        /* Custom scrollbar for smooth UI */
-        ::-webkit-scrollbar {
-            width: 6px;
-            height: 6px;
+        .win-button {
+            background-color: #c0c0c0;
+            border-top: 2px solid #ffffff;
+            border-left: 2px solid #ffffff;
+            border-right: 2px solid #404040;
+            border-bottom: 2px solid #404040;
+            active:border-top: 2px solid #404040;
+            active:border-left: 2px solid #404040;
+            active:border-right: 2px solid #ffffff;
+            active:border-bottom: 2px solid #ffffff;
         }
-        ::-webkit-scrollbar-track {
-            background: #f1f5f9;
+        .win-button:active {
+            border-top: 2px solid #404040;
+            border-left: 2px solid #404040;
+            border-right: 2px solid #ffffff;
+            border-bottom: 2px solid #ffffff;
+            padding-top: 3px;
+            padding-left: 3px;
         }
-        ::-webkit-scrollbar-thumb {
-            background: #cbd5e1;
-            border-radius: 9999px;
+        .win-input {
+            background-color: #ffffff;
+            border-top: 2px solid #404040;
+            border-left: 2px solid #404040;
+            border-right: 2px solid #ffffff;
+            border-bottom: 2px solid #ffffff;
+        }
+        .win-inset {
+            background-color: #ffffff;
+            border-top: 2px solid #404040;
+            border-left: 2px solid #404040;
+            border-right: 2px solid #ffffff;
+            border-bottom: 2px solid #ffffff;
+        }
+        .pixel-font {
+            font-family: 'VT323', monospace;
         }
     </style>
 </head>
-<body class="min-h-screen text-slate-800 flex flex-col">
+<body class="min-h-screen p-2 sm:p-6 flex flex-col justify-between">
 
-    <!-- Header -->
-    <header class="gradient-bg text-white shadow-md sticky top-0 z-50">
-        <div class="max-w-2xl mx-auto px-4 py-4 flex items-center justify-between">
-            <div class="flex items-center space-x-2">
-                <div class="bg-white/20 p-2 rounded-xl backdrop-blur-sm">
-                    <i class="fa-solid fa-plane-departure text-xl"></i>
-                </div>
-                <h1 class="text-lg font-bold tracking-tight">TravelMate AI</h1>
-            </div>
-            <span class="text-xs bg-white/20 px-3 py-1 rounded-full font-medium">Beta v1.0</span>
+    <!-- Top Retro Header Bar -->
+    <header class="win-window px-4 py-2 flex items-center justify-between mb-4">
+        <div class="flex items-center space-x-2">
+            <i class="fa-solid fa-earth-americas text-blue-900 text-lg"></i>
+            <span class="font-bold text-sm tracking-wider text-black">TRAVEL98.EXE - AI Itinerary Generator</span>
+        </div>
+        <div class="flex space-x-1">
+            <button class="win-button px-2 py-0.5 text-xs font-bold leading-none">_</button>
+            <button class="win-button px-2 py-0.5 text-xs font-bold leading-none">□</button>
+            <button class="win-button px-2 py-0.5 text-xs font-bold leading-none text-red-700">✕</button>
         </div>
     </header>
 
-    <!-- Main Container -->
-    <main class="flex-1 max-w-2xl w-full mx-auto px-4 py-6 space-y-6">
+    <!-- Main Container Window -->
+    <main class="max-w-xl w-full mx-auto flex-1 flex flex-col justify-center">
 
-        <!-- Intro Banner -->
-        <section class="bg-white p-6 rounded-2xl card-shadow border border-slate-100">
-            <h2 class="text-xl font-bold text-slate-900 mb-1">어디로 떠나시나요? ✈️</h2>
-            <p class="text-sm text-slate-500 mb-6">원하시는 여행 정보를 입력하시면 AI가 맞춤형 일정을 짜드립니다.</p>
+        <!-- Planner Form Window -->
+        <div id="formWindow" class="win-window p-4 sm:p-6 mb-6">
+            <div class="win-titlebar text-white px-3 py-1.5 mb-4 flex items-center justify-between">
+                <span class="text-sm font-bold flex items-center"><i class="fa-solid fa-suitcase mr-2"></i> 여행 설정 마법사 v1.0</span>
+                <span class="pixel-font text-lg">READY</span>
+            </div>
 
-            <!-- Planner Form -->
             <form id="plannerForm" class="space-y-4">
                 <!-- Destination -->
                 <div>
-                    <label class="block text-xs font-semibold text-slate-600 uppercase tracking-wider mb-1.5">
-                        <i class="fa-solid fa-location-dot text-indigo-500 mr-1"></i> 여행지
+                    <label class="block text-xs font-bold text-black mb-1 uppercase">
+                        📍 1. 여행지 (Destination)
                     </label>
-                    <input type="text" id="destination" required placeholder="예: 일본 도쿄, 제주도, 파리" 
-                        class="w-full px-4 py-3 rounded-xl border border-slate-200 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-transparent text-sm bg-slate-50 transition">
+                    <input type="text" id="destination" required placeholder="예: 서울, 오사카, 뉴욕" 
+                        class="w-full px-3 py-2 win-input text-sm text-black focus:outline-none">
                 </div>
 
                 <!-- Grid for Duration & Companion -->
                 <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
                     <!-- Duration -->
                     <div>
-                        <label class="block text-xs font-semibold text-slate-600 uppercase tracking-wider mb-1.5">
-                            <i class="fa-solid fa-calendar-days text-indigo-500 mr-1"></i> 여행 기간 (일수)
+                        <label class="block text-xs font-bold text-black mb-1 uppercase">
+                            📅 2. 여행 기간
                         </label>
-                        <select id="duration" class="w-full px-4 py-3 rounded-xl border border-slate-200 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-transparent text-sm bg-slate-50 transition">
+                        <select id="duration" class="w-full px-3 py-2 win-input text-sm text-black focus:outline-none">
                             <option value="1">1일 (당일치기)</option>
                             <option value="2">2박 3일 (3일)</option>
                             <option value="3" selected>3박 4일 (4일)</option>
@@ -87,13 +119,13 @@
 
                     <!-- Companion -->
                     <div>
-                        <label class="block text-xs font-semibold text-slate-600 uppercase tracking-wider mb-1.5">
-                            <i class="fa-solid fa-user-group text-indigo-500 mr-1"></i> 누구와 가시나요?
+                        <label class="block text-xs font-bold text-black mb-1 uppercase">
+                            👥 3. 동행인
                         </label>
-                        <select id="companion" class="w-full px-4 py-3 rounded-xl border border-slate-200 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-transparent text-sm bg-slate-50 transition">
-                            <option value="혼자">혼자서 (나홀로)</option>
+                        <select id="companion" class="w-full px-3 py-2 win-input text-sm text-black focus:outline-none">
+                            <option value="혼자">혼자서</option>
                             <option value="친구">친구와 함께</option>
-                            <option value="연인">연인과 로맨틱하게</option>
+                            <option value="연인">연인과 함께</option>
                             <option value="가족">가족과 함께</option>
                         </select>
                     </div>
@@ -101,66 +133,73 @@
 
                 <!-- Interests -->
                 <div>
-                    <label class="block text-xs font-semibold text-slate-600 uppercase tracking-wider mb-2">
-                        <i class="fa-solid fa-heart text-indigo-500 mr-1"></i> 주요 관심사 (복수 선택 가능)
+                    <label class="block text-xs font-bold text-black mb-2 uppercase">
+                        ❤️ 4. 주요 관심사 (다중 선택 가능)
                     </label>
                     <div class="flex flex-wrap gap-2" id="interestTags">
-                        <button type="button" data-value="맛집투어" class="interest-tag px-3.5 py-2 rounded-xl text-xs font-medium border border-slate-200 bg-slate-50 text-slate-600 transition hover:bg-indigo-50 hover:border-indigo-300">🍽️ 맛집투어</button>
-                        <button type="button" data-value="카페탐방" class="interest-tag px-3.5 py-2 rounded-xl text-xs font-medium border border-slate-200 bg-slate-50 text-slate-600 transition hover:bg-indigo-50 hover:border-indigo-300">☕ 카페탐방</button>
-                        <button type="button" data-value="역사/문화" class="interest-tag px-3.5 py-2 rounded-xl text-xs font-medium border border-slate-200 bg-slate-50 text-slate-600 transition hover:bg-indigo-50 hover:border-indigo-300">🏛️ 역사/문화</button>
-                        <button type="button" data-value="쇼핑" class="interest-tag px-3.5 py-2 rounded-xl text-xs font-medium border border-slate-200 bg-slate-50 text-slate-600 transition hover:bg-indigo-50 hover:border-indigo-300">🛍️ 쇼핑</button>
-                        <button type="button" data-value="자연/힐링" class="interest-tag px-3.5 py-2 rounded-xl text-xs font-medium border border-slate-200 bg-slate-50 text-slate-600 transition hover:bg-indigo-50 hover:border-indigo-300">🌿 자연/힐링</button>
-                        <button type="button" data-value="액티비티" class="interest-tag px-3.5 py-2 rounded-xl text-xs font-medium border border-slate-200 bg-slate-50 text-slate-600 transition hover:bg-indigo-50 hover:border-indigo-300">🎢 액티비티</button>
+                        <button type="button" data-value="맛집투어" class="interest-tag win-button px-3 py-1.5 text-xs font-medium text-black">🍽️ 맛집투어</button>
+                        <button type="button" data-value="카페탐방" class="interest-tag win-button px-3 py-1.5 text-xs font-medium text-black">☕ 카페탐방</button>
+                        <button type="button" data-value="역사/문화" class="interest-tag win-button px-3 py-1.5 text-xs font-medium text-black">🏛️ 역사/문화</button>
+                        <button type="button" data-value="쇼핑" class="interest-tag win-button px-3 py-1.5 text-xs font-medium text-black">🛍️ 쇼핑</button>
+                        <button type="button" data-value="자연/힐링" class="interest-tag win-button px-3 py-1.5 text-xs font-medium text-black">🌿 자연/힐링</button>
+                        <button type="button" data-value="액티비티" class="interest-tag win-button px-3 py-1.5 text-xs font-medium text-black">🎢 액티비티</button>
                     </div>
                 </div>
 
                 <!-- Submit Button -->
-                <button type="submit" id="submitBtn" class="w-full py-3.5 px-4 gradient-bg text-white font-semibold rounded-xl shadow-lg shadow-indigo-500/25 hover:opacity-95 active:scale-[0.99] transition flex items-center justify-center space-x-2">
-                    <i class="fa-solid fa-wand-magic-sparkles"></i>
-                    <span>AI 맞춤 일정 생성하기</span>
-                </button>
-            </form>
-        </section>
-
-        <!-- Loading State (Hidden by default) -->
-        <section id="loadingSection" class="hidden bg-white p-8 rounded-2xl card-shadow border border-slate-100 text-center space-y-4">
-            <div class="inline-block animate-spin text-indigo-600 text-3xl">
-                <i class="fa-solid fa-spinner"></i>
-            </div>
-            <div>
-                <h3 class="font-bold text-slate-800">AI가 일정을 짜고 있습니다...</h3>
-                <p class="text-xs text-slate-500 mt-1">최적의 동선과 맞춤형 장소를 분석 중입니다.</p>
-            </div>
-        </section>
-
-        <!-- Results Section -->
-        <section id="resultsSection" class="hidden space-y-6">
-            <div class="flex items-center justify-between bg-white p-4 rounded-2xl card-shadow border border-slate-100">
-                <div>
-                    <span id="resultMeta" class="text-xs font-semibold text-indigo-600 bg-indigo-50 px-2.5 py-1 rounded-full"></span>
-                    <h3 id="resultTitle" class="text-lg font-bold text-slate-900 mt-1"></h3>
+                <div class="pt-2 text-center">
+                    <button type="submit" class="win-button px-6 py-2.5 text-sm font-bold text-black bg-[#c0c0c0] hover:bg-[#d4d4d4] flex items-center justify-center mx-auto space-x-2">
+                        <i class="fa-solid fa-bolt text-amber-600"></i>
+                        <span>AI 일정 자동 생성 실행 (.EXE)</span>
+                    </button>
                 </div>
-                <button id="resetBtn" class="text-xs text-slate-500 hover:text-indigo-600 px-3 py-2 rounded-lg border border-slate-200 hover:border-indigo-200 transition">
-                    <i class="fa-solid fa-rotate-right mr-1"></i> 다시 만들기
-                </button>
+            </form>
+        </div>
+
+        <!-- Loading Window (Hidden) -->
+        <div id="loadingWindow" class="win-window p-6 mb-6 hidden text-center space-y-4">
+            <div class="win-titlebar text-white px-3 py-1 mb-2 text-left font-bold text-sm">
+                시스템 처리 중...
+            </div>
+            <div class="py-6 space-y-3">
+                <div class="inline-block animate-bounce text-3xl">⏳</div>
+                <p class="font-bold text-black text-sm">Gemini AI가 최적의 여행 경로를 연산 중입니다...</p>
+                <div class="w-full win-inset h-4 bg-white relative overflow-hidden">
+                    <div class="bg-blue-800 h-full w-2/3 animate-pulse"></div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Results Window (Hidden) -->
+        <div id="resultsWindow" class="win-window p-4 sm:p-6 mb-6 hidden space-y-4">
+            <div class="win-titlebar text-white px-3 py-1.5 flex items-center justify-between">
+                <div class="flex items-center space-x-2">
+                    <i class="fa-solid fa-map-location-dot"></i>
+                    <span id="resultHeaderTitle" class="text-sm font-bold">생성된 여행 일정 및 지도 위치</span>
+                </div>
+                <button id="resetBtn" class="win-button text-black text-xs px-2 py-0.5 font-bold">새로 만들기</button>
             </div>
 
-            <!-- Itinerary Cards Container -->
-            <div id="itineraryContainer" class="space-y-4">
+            <!-- Itinerary Days Container -->
+            <div id="itineraryContainer" class="space-y-4 max-h-[60vh] overflow-y-auto pr-1">
                 <!-- Days will be injected here -->
             </div>
-        </section>
+        </div>
     </main>
 
-    <!-- Footer -->
-    <footer class="text-center py-6 text-xs text-slate-400">
-        &copy; 2026 TravelMate AI. Powered by Gemini.
+    <!-- Footer Status Bar -->
+    <footer class="win-window px-3 py-1 text-xs text-black flex items-center justify-between">
+        <div class="flex items-center space-x-2">
+            <span class="w-2 h-2 bg-green-600 rounded-full inline-block"></span>
+            <span>시스템 정상 작동 중 (Vercel API 연동됨)</span>
+        </div>
+        <span class="pixel-font text-sm">1998 Microsoft Windows</span>
     </footer>
 
-    <!-- Custom Notification Modal / Toast -->
-    <div id="toast" class="fixed bottom-6 left-1/2 transform -translate-x-1/2 bg-slate-900 text-white text-xs px-4 py-2.5 rounded-full shadow-lg opacity-0 pointer-events-none transition-opacity duration-300 z-50 flex items-center space-x-2">
-        <i class="fa-solid fa-circle-check text-emerald-400"></i>
-        <span id="toastMessage">알림 메시지</span>
+    <!-- Retro Message Box / Toast -->
+    <div id="toast" class="fixed bottom-12 left-1/2 transform -translate-x-1/2 win-window px-4 py-2 text-xs font-bold text-black opacity-0 pointer-events-none transition-opacity duration-200 z-50 flex items-center space-x-2 bg-yellow-100">
+        <i class="fa-solid fa-triangle-exclamation text-amber-600"></i>
+        <span id="toastMessage">알림 내용</span>
     </div>
 
     <script>
@@ -171,17 +210,18 @@
                 const value = tag.getAttribute('data-value');
                 if (selectedInterests.has(value)) {
                     selectedInterests.delete(value);
-                    tag.classList.remove('bg-indigo-600', 'text-white', 'border-indigo-600');
-                    tag.classList.add('bg-slate-50', 'text-slate-600', 'border-slate-200');
+                    tag.style.backgroundColor = '#c0c0c0';
+                    tag.style.borderTop = '2px solid #ffffff';
+                    tag.style.borderLeft = '2px solid #ffffff';
                 } else {
                     selectedInterests.add(value);
-                    tag.classList.add('bg-indigo-600', 'text-white', 'border-indigo-600');
-                    tag.classList.remove('bg-slate-50', 'text-slate-600', 'border-slate-200');
+                    tag.style.backgroundColor = '#a0a0a0';
+                    tag.style.borderTop = '2px solid #404040';
+                    tag.style.borderLeft = '2px solid #404040';
                 }
             });
         });
 
-        // Toast helper
         function showToast(msg) {
             const toast = document.getElementById('toast');
             document.getElementById('toastMessage').innerText = msg;
@@ -191,7 +231,7 @@
             }, 3000);
         }
 
-        // Form submission handler
+        // Form Submission
         document.getElementById('plannerForm').addEventListener('submit', async function(e) {
             e.preventDefault();
 
@@ -205,14 +245,12 @@
                 return;
             }
 
-            // Hide form, show loading
-            document.getElementById('plannerForm').parentElement.classList.add('hidden');
-            document.getElementById('loadingSection').classList.remove('hidden');
+            document.getElementById('formWindow').classList.add('hidden');
+            document.getElementById('loadingWindow').classList.remove('hidden');
 
             let itineraryData = null;
 
             try {
-                // Try fetching from user's backend endpoint /api/plan
                 const response = await fetch('/api/plan', {
                     method: 'POST',
                     headers: { 'Content-Type': 'application/json' },
@@ -222,105 +260,101 @@
                 if (response.ok) {
                     itineraryData = await response.json();
                 } else {
-                    throw new Error('API endpoint not ready');
+                    throw new Error('API not ready');
                 }
             } catch (err) {
-                // Fallback mock generation since /api/plan is not yet built
-                await new Promise(resolve => setTimeout(resolve, 1500)); // Simulate network delay
+                await new Promise(resolve => setTimeout(resolve, 1500));
                 itineraryData = generateMockItinerary(destination, duration, companion, interests);
             }
 
-            // Hide loading, show results
-            document.getElementById('loadingSection').classList.add('hidden');
+            document.getElementById('loadingWindow').classList.add('hidden');
             renderItinerary(destination, duration, companion, itineraryData);
-            document.getElementById('resultsSection').classList.remove('hidden');
-            showToast('맞춤 일정이 생성되었습니다!');
+            document.getElementById('resultsWindow').classList.remove('hidden');
+            showToast('일정이 성공적으로 생성되었습니다!');
         });
 
-        // Reset button handler
         document.getElementById('resetBtn').addEventListener('click', function() {
-            document.getElementById('resultsSection').classList.add('hidden');
-            document.getElementById('plannerForm').parentElement.classList.remove('hidden');
+            document.getElementById('resultsWindow').classList.add('hidden');
+            document.getElementById('formWindow').classList.remove('hidden');
             window.scrollTo({ top: 0, behavior: 'smooth' });
         });
 
-        // Fallback Mock Itinerary Generator
+        // Fallback Mock Generator
         function generateMockItinerary(destination, duration, companion, interests) {
             const days = [];
             const interestStr = interests.length > 0 ? interests.join(', ') : '종합 관광';
 
             for (let i = 1; i <= duration; i++) {
-                let dayTitle = `Day ${i}: 탐험과 발견`;
                 let activities = [];
-
                 if (i === 1) {
-                    dayTitle = `Day 1: 설레는 첫째 날 & 시내 도착`;
                     activities = [
-                        { time: '10:00', title: '숙소 체크인 및 짐 맡기기', desc: `${destination} 중심가 숙소 이동 후 여장 풀기` },
-                        { time: '12:30', title: '현지 추천 맛집 식사', desc: `대표 향토 음식(${interestStr} 스타일) 즐기기` },
-                        { time: '15:00', title: '시내 주요 랜드마크 산책', desc: '주변 주요 명소 및 거리 구경' },
-                        { time: '19:00', title: '야경 명소 방문 및 저녁 식사', desc: '첫날 밤 분위기를 즐길 수 있는 추천 레스토랑' }
+                        { time: '10:00', title: `${destination} 공항/역 도착 및 숙소 이동`, desc: '체크인 후 가벼운 주변 탐색' },
+                        { time: '13:00', title: '현지 로컬 맛집 점심 식사', desc: `${interestStr} 관련 유명 식당 방문` },
+                        { time: '16:00', title: '메인 랜드마크 및 시내 투어', desc: '대표 명소 기념 촬영 및 산책' },
+                        { time: '19:30', title: '첫째 날 야경 및 저녁 만찬', desc: '분위기 있는 레스토랑에서 휴식' }
                     ];
                 } else if (i === duration) {
-                    dayTitle = `Day ${i}: 아쉬운 마지막 날 & 기념품 쇼핑`;
                     activities = [
-                        { time: '09:30', title: '조식 및 여유로운 오전 산책', desc: '근처 예쁜 카페에서 커피 한잔' },
-                        { time: '11:30', title: '기념품 쇼핑 및 로컬 마켓', desc: '지인들에게 줄 선물과 특산품 구매' },
-                        { time: '14:00', title: '공항/역으로 이동 및 출국 준비', desc: '여행 마무리 및 안전한 귀가 길' }
+                        { time: '09:30', title: '호텔 조식 및 여유로운 오전', desc: '근처 카페에서 커피와 디저트' },
+                        { time: '11:30', title: '기념품 쇼핑 및 특산품 구매', desc: '로컬 마켓 및 상점가 방문' },
+                        { time: '14:30', title: '공항/역 이동 및 여행 마무리', desc: '귀가 길 안전하게 이동' }
                     ];
                 } else {
-                    dayTitle = `Day ${i}: 깊이 있는 ${destination} 체험`;
                     activities = [
-                        { time: '09:30', title: '오전 액티비티 또는 문화 탐방', desc: `${interestStr}과(와) 관련된 베스트 명소 방문` },
-                        { time: '13:00', title: '특색 있는 로컬 런치', desc: '현지인들이 즐겨 찾는 숨은 맛집' },
-                        { time: '15:30', title: '인생샷 스팟 & 휴식', desc: '감성 가득한 카페 혹은 자연 휴식처' },
-                        { time: '19:30', title: '근사한 저녁 만찬', desc: `${companion}와(과) 함께하는 특별한 저녁 시간` }
+                        { time: '09:30', title: '오전 액티비티 및 문화 탐방', desc: `${destination} 특색 있는 명소 체험` },
+                        { time: '13:00', title: '숨은 골목 맛집 런치', desc: '현지인 추천 맛집 탐방' },
+                        { time: '15:30', title: '감성 포토스팟 & 휴식처', desc: '인생샷 남기기 좋은 장소' },
+                        { time: '19:00', title: '근사한 디너 코스', desc: `${companion}와(과) 함께하는 특별한 저녁` }
                     ];
                 }
-
-                days.push({ dayNumber: i, title: dayTitle, activities: activities });
+                days.push({ dayNumber: i, title: `Day ${i}: ${destination} 탐험`, activities });
             }
             return days;
         }
 
-        // Render Itinerary Cards
+        // Render Results with Map Links
         function renderItinerary(destination, duration, companion, data) {
-            document.getElementById('resultMeta').innerText = `${companion}과 함께하는 ${duration}일 여행`;
-            document.getElementById('resultTitle').innerText = `${destination} 맞춤 일정표`;
-
+            document.getElementById('resultHeaderTitle').innerText = `${destination} (${companion} 동행, ${duration}일 일정)`;
             const container = document.getElementById('itineraryContainer');
             container.innerHTML = '';
 
             data.forEach((dayObj) => {
-                const card = document.createElement('div');
-                card.className = 'bg-white rounded-2xl card-shadow border border-slate-100 overflow-hidden transition hover:shadow-md';
-                
-                let activitiesHtml = '';
+                const dayBox = document.createElement('div');
+                dayBox.className = 'win-inset p-3 bg-white';
+
+                let actsHtml = '';
                 dayObj.activities.forEach(act => {
-                    activitiesHtml += `
-                        <div class="flex items-start space-x-3 pb-4 last:pb-0 border-b last:border-0 border-slate-100">
-                            <span class="text-xs font-semibold px-2.5 py-1 bg-indigo-50 text-indigo-600 rounded-lg shrink-0 mt-0.5">${act.time}</span>
-                            <div>
-                                <h5 class="text-sm font-semibold text-slate-800">${act.title}</h5>
-                                <p class="text-xs text-slate-500 mt-0.5">${act.desc}</p>
+                    // Google Maps Search URL encoded query
+                    const mapQuery = encodeURIComponent(`${destination} ${act.title}`);
+                    const mapUrl = `https://www.google.com/maps/search/?api=1&query=${mapQuery}`;
+
+                    actsHtml += `
+                        <div class="py-2 border-b border-dashed border-slate-300 last:border-0 flex flex-col sm:flex-row sm:items-center justify-between gap-2">
+                            <div class="flex items-start space-x-3">
+                                <span class="pixel-font text-base bg-blue-900 text-white px-2 py-0.5 rounded-none shrink-0">${act.time}</span>
+                                <div>
+                                    <h5 class="text-sm font-bold text-black">${act.title}</h5>
+                                    <p class="text-xs text-slate-600">${act.desc}</p>
+                                </div>
                             </div>
+                            <a href="${mapUrl}" target="_blank" rel="noopener noreferrer" class="win-button px-2.5 py-1 text-xs font-bold text-black flex items-center justify-center space-x-1 shrink-0 bg-[#e0e0e0] hover:bg-[#d0d0d0]">
+                                <i class="fa-solid fa-map-location text-red-600"></i>
+                                <span>지도에서 위치 확인</span>
+                            </a>
                         </div>
                     `;
                 });
 
-                card.innerHTML = `
-                    <div class="bg-slate-50 px-6 py-3 border-b border-slate-100 flex items-center justify-between">
-                        <h4 class="font-bold text-slate-900 text-sm flex items-center">
-                            <span class="w-2 h-2 rounded-full bg-indigo-600 mr-2"></span>
-                            ${dayObj.title}
-                        </h4>
-                        <span class="text-xs text-slate-400 font-medium">Day ${dayObj.dayNumber}</span>
+                dayBox.innerHTML = `
+                    <div class="font-bold text-xs bg-slate-300 px-2 py-1 mb-2 text-black border-l-4 border-blue-900 flex justify-between items-center">
+                        <span>${dayObj.title}</span>
+                        <span class="pixel-font text-sm">DAY ${dayObj.dayNumber}</span>
                     </div>
-                    <div class="p-6 space-y-4">
-                        ${activitiesHtml}
+                    <div class="space-y-1">
+                        ${actsHtml}
                     </div>
                 `;
-                container.appendChild(card);
+                container.appendChild(dayBox);
             });
         }
     </script>
